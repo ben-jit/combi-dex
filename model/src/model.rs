@@ -196,7 +196,6 @@ impl PartialOrd for Bid {
 }
 
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
