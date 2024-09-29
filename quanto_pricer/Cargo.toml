@@ -1,0 +1,11 @@
+[package]
+name = "quanto_pricer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ndarray = "0.16.0"
+rustfft = "6.2.0"
+num-complex = "0.4.6"
+roots = "0.0.8"
+statrs = "0.17.0"
