@@ -78,6 +78,29 @@ pub fn allocate_basket(bids: &[&Bid], basket: &Basket) -> HashMap<u64, Vec<Asset
     allocation
 }
 
+pub fn can_fulfill<'a>(bids: &[&'a Bid], basket: &'a Basket) -> bool {
+    let mut remaining_assets: HashMap<String, f64> = basket
+        .assets
+        .iter()
+        .map(|asset_info| (asset_info.asset.base.clone(), asset_info.quantity))
+        .collect();
+
+    for bid in bids.iter() {
+        for asset_info in &basket.assets {
+            let available_quantity = remaining_assets.get_mut(&asset_info.asset.base).unwrap();
+            let bid_demand = bid.quantity.unwrap_or(1.0) * asset_info.quantity;
+
+            if bid_demand > *available_quantity {
+                return false;
+            }
+
+            *available_quantity -= bid_demand;
+        }
+    }
+
+    true
+}
+
 
 #[cfg(test)]
 mod tests {
